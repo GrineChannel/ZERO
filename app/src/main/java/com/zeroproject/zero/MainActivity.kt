@@ -14,7 +14,7 @@ class MainActivity : Activity() {
     private lateinit var input: EditText
     private lateinit var scroll: ScrollView
 
-    private val background = Color.rgb(18, 18, 24)
+    private val bgColor = Color.rgb(18, 18, 24)
     private val accent = Color.rgb(190, 155, 90)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class MainActivity : Activity() {
 
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundColor(background)
+            setBackgroundColor(bgColor)
             setPadding(20, 20, 20, 12)
         }
 
@@ -71,7 +71,9 @@ class MainActivity : Activity() {
             text = "➤"
             textSize = 20f
             setTextColor(Color.WHITE)
-            setOnClickListener { sendMessage() }
+            setOnClickListener {
+                sendMessage()
+            }
         }
 
         inputRow.addView(
@@ -86,6 +88,7 @@ class MainActivity : Activity() {
 
         root.addView(header)
         root.addView(status)
+
         root.addView(
             scroll,
             LinearLayout.LayoutParams(
@@ -94,6 +97,7 @@ class MainActivity : Activity() {
                 1f
             )
         )
+
         root.addView(inputRow)
 
         setContentView(root)
@@ -122,10 +126,13 @@ class MainActivity : Activity() {
         val message = TextView(this).apply {
             this.text = "$sender\n$text"
             textSize = 15f
+
             setTextColor(
                 if (sender == "ZERO") Color.WHITE else accent
             )
+
             setPadding(16, 14, 16, 14)
+
             setBackgroundColor(
                 if (sender == "ZERO")
                     Color.rgb(38, 38, 48)
