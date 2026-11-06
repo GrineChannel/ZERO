@@ -1,3 +1,4 @@
+
 name: Build ZERO APK
 
 on:
@@ -21,10 +22,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-            - name: Setup Android SDK
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          packages: 'platform-tools'
+          packages: platform-tools
 
       - name: Install Android SDK
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
