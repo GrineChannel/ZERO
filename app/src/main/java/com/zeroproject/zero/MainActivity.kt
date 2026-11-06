@@ -69,7 +69,7 @@ class MainActivity : Activity() {
             textSize = 16f
 
             setSingleLine(false)
-            minLines = 2
+            minLines = 3
             maxLines = 5
             gravity = Gravity.TOP or Gravity.START
 
@@ -92,9 +92,7 @@ class MainActivity : Activity() {
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 1f
-            ).apply {
-                minimumHeight = 64
-            }
+            )
         )
 
         inputRow.addView(
