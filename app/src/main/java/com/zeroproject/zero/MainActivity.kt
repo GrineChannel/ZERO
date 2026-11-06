@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.graphics.Color
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 
 class MainActivity : Activity() {
@@ -20,10 +21,14 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
+
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(bgColor)
-            setPadding(20, 20, 20, 12)
+            setPadding(16, 12, 16, 12)
         }
 
         val header = TextView(this).apply {
@@ -31,7 +36,7 @@ class MainActivity : Activity() {
             textSize = 30f
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
-            setPadding(0, 12, 0, 4)
+            setPadding(0, 8, 0, 4)
         }
 
         val status = TextView(this).apply {
@@ -39,7 +44,7 @@ class MainActivity : Activity() {
             textSize = 13f
             setTextColor(accent)
             gravity = Gravity.CENTER
-            setPadding(0, 0, 0, 18)
+            setPadding(0, 0, 0, 12)
         }
 
         scroll = ScrollView(this)
@@ -53,23 +58,28 @@ class MainActivity : Activity() {
 
         val inputRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, 12, 0, 0)
+            gravity = Gravity.BOTTOM
+            setPadding(0, 10, 0, 0)
         }
 
         input = EditText(this).apply {
-            hint = "Напиши ZERO..."
+            hint = "Напиши сообщение ZERO..."
             setHintTextColor(Color.GRAY)
             setTextColor(Color.WHITE)
-            textSize = 15f
-            setSingleLine(true)
-            setPadding(16, 12, 16, 12)
+            textSize = 16f
+
+            setSingleLine(false)
+            minLines = 2
+            maxLines = 5
+            gravity = Gravity.TOP or Gravity.START
+
+            setPadding(16, 14, 16, 14)
             setBackgroundColor(Color.rgb(38, 38, 48))
         }
 
         val send = Button(this).apply {
             text = "➤"
-            textSize = 20f
+            textSize = 22f
             setTextColor(Color.WHITE)
             setOnClickListener {
                 sendMessage()
@@ -78,12 +88,18 @@ class MainActivity : Activity() {
 
         inputRow.addView(
             input,
-            LinearLayout.LayoutParams(0, 58, 1f)
+            LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+            ).apply {
+                minimumHeight = 64
+            }
         )
 
         inputRow.addView(
             send,
-            LinearLayout.LayoutParams(58, 58)
+            LinearLayout.LayoutParams(64, 64)
         )
 
         root.addView(header)
@@ -104,7 +120,7 @@ class MainActivity : Activity() {
 
         addMessage(
             "ZERO",
-            "Привет! Я на связи. Пока работаю в тестовом режиме, но скоро мы подключим мою нейросеть."
+            "Привет! Я на связи. Скоро мы подключим мою нейросеть Gemma 3 4B."
         )
     }
 
@@ -118,7 +134,7 @@ class MainActivity : Activity() {
 
         addMessage(
             "ZERO",
-            "Я получил твоё сообщение: \"$text\"\n\nСейчас мой чат работает в тестовом режиме. Следующий этап — подключение Gemma 3 4B."
+            "Я получил твоё сообщение:\n$text\n\nПока работаю в тестовом режиме."
         )
     }
 
